@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-       - run: for f in *.zip; do unzip -o -q "$f"; done; ls -la
+      - name: Descomprimir
+        run: 'for f in *.zip; do unzip -o -q "$f"; done; ls -la'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -17,7 +18,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
-      - run: gradle assembleDebug --no-daemon
+      - name: Compilar
+        run: gradle assembleDebug --no-daemon
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
